@@ -11,4 +11,4 @@
 - SpringBoot v3.2.3或更高版本
 
 ## 範例上傳格式
-![](https://github.com/pony0278/Exam/issues/1#issue-2884575447)
+![Image](https://github.com/user-attachments/assets/6e2ec8e3-04f0-4803-a150-77b27e4b21b6)
