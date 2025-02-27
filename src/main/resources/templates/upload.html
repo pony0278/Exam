@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <title>上傳考題</title>
+</head>
+<body>
+<h2>上傳JSON考題文件</h2>
+<form id="uploadForm">
+    <input type="file" id="fileInput"><br><br>
+    <button type="button" onclick="uploadFile()">生成考卷</button>
+</form>
+
+<script>
+    async function uploadFile() {
+        try {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) {
+                alert('請選擇文件');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch('/api/exam/generate', {
+                method: 'POST',
+                body: formData
+            });
+
+            console.log('回應狀態:', response.status);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exam.html';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+        } catch (error) {
+            console.error('錯誤:', error);
+            alert('處理文件時發生錯誤: ' + error.message);
+        }
+    }
+</script>
+</body>
